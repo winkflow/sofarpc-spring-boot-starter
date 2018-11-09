@@ -4,15 +4,15 @@ import com.alipay.sofa.rpc.context.RpcInvokeContext;
 import com.alipay.sofa.rpc.core.exception.SofaRpcException;
 import com.alipay.sofa.rpc.core.invoke.SofaResponseCallback;
 import com.alipay.sofa.rpc.core.request.RequestBase;
-import io.wink.tool.support.Apply;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class Reference {
 
-    public static <T> CompletableFuture<T> callBack(Apply apply) {
+    public static <T> CompletableFuture<T> callBack(Consumer consumer) {
         CompletableFuture<T> completableFuture = new CompletableFuture<>();
-        apply.apply(RpcInvokeContext.getContext().setResponseCallback(
+        consumer.accept(RpcInvokeContext.getContext().setResponseCallback(
                 new SofaResponseCallback() {
                     @Override
                     public void onAppResponse(Object appResponse, String methodName, RequestBase request) {
